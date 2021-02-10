@@ -1,0 +1,400 @@
+
+mysql> use onlinefoodorderdb;
+Database changed
+mysql> create table Restaurants(RestaurantID int primary key auto_increment,RestaurantName varchar(25),RestaurantAddress varchar(70),RestaurantCity varchar(10),ContactNo bigint);
+Query OK, 0 rows affected (2.23 sec)
+
+mysql> desc Restaurants;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| RestaurantID      | int         | NO   | PRI | NULL    | auto_increment |
+| RestaurantName    | varchar(25) | YES  |     | NULL    |                |
+| RestaurantAddress | varchar(70) | YES  |     | NULL    |                |
+| RestaurantCity    | varchar(10) | YES  |     | NULL    |                |
+| ContactNo         | bigint      | YES  |     | NULL    |                |
++-------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.21 sec)
+
+mysql> create table RmenuItems(Menuid int primary key auto_increment, Restid int, Menuname varchar(20), Menutype varchar(20), Menucategory varchar(20), Menuprice double,Menudes varchar(20),foreign key(Restid) references Restaurants(RestaurantID));
+Query OK, 0 rows affected (2.73 sec)
+
+mysql> desc RmenuItems;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| Menuid       | int         | NO   | PRI | NULL    | auto_increment |
+| Restid       | int         | YES  | MUL | NULL    |                |
+| Menuname     | varchar(20) | YES  |     | NULL    |                |
+| Menutype     | varchar(20) | YES  |     | NULL    |                |
+| Menucategory | varchar(20) | YES  |     | NULL    |                |
+| Menuprice    | double      | YES  |     | NULL    |                |
+| Menudes      | varchar(20) | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.06 sec)
+
+mysql> create table Customers(CustomerID int primary key,CustomerName varchar(20),CustomerCity varchar(20),CustomerDOB date,CustomerGender varchar(10),CustomerPassword varchar(20));
+Query OK, 0 rows affected (2.10 sec)
+
+mysql> desc Customers;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| CustomerID       | int         | NO   | PRI | NULL    |       |
+| CustomerName     | varchar(20) | YES  |     | NULL    |       |
+| CustomerCity     | varchar(20) | YES  |     | NULL    |       |
+| CustomerDOB      | date        | YES  |     | NULL    |       |
+| CustomerGender   | varchar(10) | YES  |     | NULL    |       |
+| CustomerPassword | varchar(20) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.09 sec)
+
+mysql> create table Orders(OrderID int primary key auto_increment,CustomerID int,Orderdate date,DeliveryAddress varchar(40),OrderStatus varchar(20), foreign key(CustomerID)references Customers(CustomerID));
+Query OK, 0 rows affected (2.73 sec)
+
+mysql> desc Orders;
++-----------------+-------------+------+-----+---------+----------------+
+| Field           | Type        | Null | Key | Default | Extra          |
++-----------------+-------------+------+-----+---------+----------------+
+| OrderID         | int         | NO   | PRI | NULL    | auto_increment |
+| CustomerID      | int         | YES  | MUL | NULL    |                |
+| Orderdate       | date        | YES  |     | NULL    |                |
+| DeliveryAddress | varchar(40) | YES  |     | NULL    |                |
+| OrderStatus     | varchar(20) | YES  |     | NULL    |                |
++-----------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> create table Ordermenus(OrderID int,Menuid int,Menuqty int, Menuprice double,foreign key(Orderid) references Orders (OrderID),foreign key(Menuid) references RmenuItems(Menuid));
+Query OK, 0 rows affected (4.14 sec)
+
+mysql> desc Ordermenus;
++-----------+--------+------+-----+---------+-------+
+| Field     | Type   | Null | Key | Default | Extra |
++-----------+--------+------+-----+---------+-------+
+| OrderID   | int    | YES  | MUL | NULL    |       |
+| Menuid    | int    | YES  | MUL | NULL    |       |
+| Menuqty   | int    | YES  |     | NULL    |       |
+| Menuprice | double | YES  |     | NULL    |       |
++-----------+--------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+---------------------------------------------------------------------------------------------------------------------
+ysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('BBQ','1000,In Metro Park Inn','Coimbatore',987654321);
+Query OK, 1 row affected (0.39 sec)
+
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Covai Trans Kitchen','1001,Venkatasamy Rd','Salem',876543219);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Peking Chinese Restaurant','49,A2 Complex,Father Randy St,','Coimbatore',7685949332);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('The Pavilion','1076,The Residency Towers,','Madurai',9786645332);
+Query OK, 1 row affected (0.14 sec)
+
+mysql>
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Annalakshmi Restaurant ','118, Thiyaki Kumaran Rd','Bangalore',6543219870);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('French Door ','102, Bashyakarlu Rd','Chennai',765432198);
+Query OK, 1 row affected (0.18 sec)
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('thalapkattu Door ','102, sonah Rd','dindigul',765432198);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('annapurnah Door ','102, saththi Rd','dindigul',765432198);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from Restaurants;
++--------------+---------------------------+--------------------------------+----------------+------------+
+| RestaurantID | RestaurantName            | RestaurantAddress              | RestaurantCity | ContactNo  |
++--------------+---------------------------+--------------------------------+----------------+------------+
+|            1 | BBQ                       | 1000,In Metro Park Inn         | Coimbatore     |  987654321 |
+|            2 | Covai Trans Kitchen       | 1001,Venkatasamy Rd            | Salem          |  876543219 |
+|            3 | Peking Chinese Restaurant | 49,A2 Complex,Father Randy St, | Coimbatore     | 7685949332 |
+|            4 | The Pavilion              | 1076,The Residency Towers,     | Madurai        | 9786645332 |
+|            5 | Annalakshmi Restaurant    | 118, Thiyaki Kumaran Rd        | Bangalore      | 6543219870 |
+|            6 | French Door               | 102, Bashyakarlu Rd            | Chennai        |  765432198 |
+|            7 | thalapkattu Door          | 102, sonah Rd                  | dindigul       |  765432198 |
+|            8 | annapurnah Door           | 102, saththi Rd                | dindigul       |  765432198 |
++--------------+---------------------------+--------------------------------+----------------+------------+
+8 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------------
+
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(1,'Grilled Paneer','Starter','Veg',150,'Half');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(2,'VegFriedRich','Main','Veg',180,'Half');
+Query OK, 1 row affected (0.19 sec)
+
+mysql>
+mysql>
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(3,'ChickenFriedRich','Main','Non-veg',200,'Full');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(4,'Chinese Noodles','Main','Non-veg',250,'Full');
+Query OK, 1 row affected (0.13 sec)
+
+
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(5,'Palak Cheat','Starter','Veg',190,'Full');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(6,'nonVegFriedRich','Main','nonveg',200,'Half');
+Query OK, 1 row affected (0.23 sec)
+
+
+mysql>  insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(2,'FriedRich','normal','nonveg',500,'Half');
+Query OK, 1 row affected (0.12 sec)
+
+mysql>  insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(1,'Friedchicken','normal','nonveg',550,'full');
+Query OK, 1 row affected (0.23 sec)
+
+mysql>  insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(3,'Friedpanier','normal','veg',550,'full');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from RmenuItems;
++--------+--------+------------------+----------+--------------+-----------+---------+
+| Menuid | Restid | Menuname         | Menutype | Menucategory | Menuprice | Menudes |
++--------+--------+------------------+----------+--------------+-----------+---------+
+|      5 |      1 | Grilled Paneer   | Starter  | Veg          |       150 | Half    |
+|      6 |      2 | VegFriedRich     | Main     | Veg          |       180 | Half    |
+|      7 |      3 | ChickenFriedRich | Main     | Non-veg      |       200 | Full    |
+|      8 |      4 | Chinese Noodles  | Main     | Non-veg      |       250 | Full    |
+|     10 |      5 | Palak Cheat      | Starter  | Veg          |       190 | Full    |
+|     11 |      6 | nonVegFriedRich  | Main     | nonveg       |       200 | Half    |
+|     12 |      2 | FriedRich        | normal   | nonveg       |       500 | Half    |
+|     13 |      1 | Friedchicken     | normal   | nonveg       |       550 | full    |
+|     14 |      3 | Friedpanier      | normal   | veg          |       550 | full    |
++--------+--------+------------------+----------+--------------+-----------+---------+
+9 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------
+
+
+mysql> insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(1,'Ramesh','Salem','1987-01-14','Male','Ramesh@1987');
+Query OK, 1 row affected (0.25 sec)
+
+mysql> insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(5,'Anand','Singapore','1991-06-29','Male','Anand@1991');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(3,'Brindha','Bangalore','1990-02-10','Female','Brindha@1990');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(2,'Venkat','Chennai','1984-10-02','Male','Venkat@1984');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from Customers;
++------------+--------------+--------------+-------------+----------------+------------------+
+| CustomerID | CustomerName | CustomerCity | CustomerDOB | CustomerGender | CustomerPassword |
++------------+--------------+--------------+-------------+----------------+------------------+
+|          1 | Ramesh       | Salem        | 1987-01-14  | Male           | Ramesh@1987      |
+|          2 | Venkat       | Chennai      | 1984-10-02  | Male           | Venkat@1984      |
+|          3 | Brindha      | Bangalore    | 1990-02-10  | Female         | Brindha@1990     |
+|          5 | Anand        | Singapore    | 1991-06-29  | Male           | Anand@1991       |
+|          6 | arun         | Chennai      | 1984-10-02  | feMale         | Arun@1984        |
++------------+--------------+--------------+-------------+----------------+------------------+
+5 rows in set (0.04 sec)
+------------------------------------------------------------------------------------------------------
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(1,'2020-02-03','711-2880 Nulla St.Mankato Mississippi','Pending');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(2,'2020-02-02','8562 Fusce Rd.Frederick Nebraska',' delivered');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(3,'2020-02-04','727 Ullamcorper. StreetRoseville',' pending');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(5,'2020-02-04','Theodore LoweAp #867-859 Sit Rd.',' delivered');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(6,'2017-02-04','Theodore koodi #867-859 Sit Rd.',' pending');
+
+mysql> insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(5,'2017-04-03','dindigul',' pending');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(5,'2020-02-12','erode east street',' deliverd');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(5,'2020-01-12','coimbatore west street',' deliverd');
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(5,'199-01-12','coimbatore north street',' pending');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from orders;
++---------+------------+------------+---------------------------------------+-------------+
+| OrderID | CustomerID | Orderdate  | DeliveryAddress                       | OrderStatus |
++---------+------------+------------+---------------------------------------+-------------+
+|       1 |          1 | 2020-02-03 | 711-2880 Nulla St.Mankato Mississippi | Pending     |
+|       2 |          2 | 2020-02-02 | 8562 Fusce Rd.Frederick Nebraska      |  delivered  |
+|       3 |          3 | 2020-02-04 | 727 Ullamcorper. StreetRoseville      |  pending    |
+|       5 |          5 | 2020-02-04 | Theodore LoweAp #867-859 Sit Rd.      |  delivered  |
+|       6 |          6 | 2017-02-04 | Theodore koodi #867-859 Sit Rd.       | pending     |
+|       7 |          5 | 2017-04-03 | dindigul                              |  pending    |
+|       8 |          5 | 2020-02-12 | erode east street                     |  deliverd   |
+|       9 |          5 | 2020-01-12 | coimbatore west street                |  deliverd   |
+|      10 |          5 | 0199-01-12 | coimbatore north street               |  pending    |
++---------+------------+------------+---------------------------------------+-------------+
+9 rows in set (0.00 sec)
+ 
++---------+------------+------------+---------------------------------------+-------------+
+ insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(1,5,90,150);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(2,6,80,170);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(3,7,99,200);
+Query OK, 1 row affected (0.10 sec)
+
+
+mysql> insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(5,8,100,203);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(6,10,105,600);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from Ordermenus;
++---------+--------+---------+-----------+
+| OrderID | Menuid | Menuqty | Menuprice |
++---------+--------+---------+-----------+
+|       1 |      5 |      90 |       150 |
+|       2 |      6 |      80 |       170 |
+|       3 |      7 |      99 |       200 |
+|       5 |      8 |     100 |       203 |
+|       6 |     10 |     105 |       600 |
++---------+--------+---------+-----------+
+5 rows in set (0.00 sec)
+-----------------------------------------------------------------------------------------------------------------
+1))-> Show the list of Restaurant of specific city:
+
+mysql> select * from Restaurants where RestaurantCity='Coimbatore'or RestaurantCity='madurai';
++--------------+---------------------------+--------------------------------+----------------+------------+
+| RestaurantID | RestaurantName            | RestaurantAddress              | RestaurantCity | ContactNo  |
++--------------+---------------------------+--------------------------------+----------------+------------+
+|            1 | BBQ                       | 1000,In Metro Park Inn         | Coimbatore     |  987654321 |
+|            3 | Peking Chinese Restaurant | 49,A2 Complex,Father Randy St, | Coimbatore     | 7685949332 |
+|            4 | The Pavilion              | 1076,The Residency Towers,     | Madurai        | 9786645332 |
++--------------+---------------------------+--------------------------------+----------------+------------+
+===============================================================================================================
+2))Show the list of Restaurant along with menus (RestaurantID,RestaurantName,MenuID,MenuName,MenuPrice):
+mysql> select RestaurantID,RestaurantName,MenuID,MenuName,MenuPrice from Restaurants,Rmenuitems where Restaurants.Restaurantid=Rmenuitems.restid;
++--------------+---------------------------+--------+------------------+-----------+
+| RestaurantID | RestaurantName            | MenuID | MenuName         | MenuPrice |
++--------------+---------------------------+--------+------------------+-----------+
+|            1 | BBQ                       |      5 | Grilled Paneer   |       150 |
+|            2 | Covai Trans Kitchen       |      6 | VegFriedRich     |       180 |
+|            3 | Peking Chinese Restaurant |      7 | ChickenFriedRich |       200 |
+|            4 | The Pavilion              |      8 | Chinese Noodles  |       250 |
+|            5 | Annalakshmi Restaurant    |     10 | Palak Cheat      |       190 |
+|            6 | French Door               |     11 | nonVegFriedRich  |       200 |
++--------------+---------------------------+--------+------------------+-----------+
+6 rows in set (0.00 sec)
+--------------------------------------------------------------------------------------------------
+3))3. Show the list of  Restaurants along with menus (RestaurantID , RestaurantName ,MenuID , MenuName , MenuPrice) of specific city:
+ 
+select RestaurantID,RestaurantName,MenuID,MenuName,MenuPrice from Restaurants,Rmenuitems where Restaurants.Restaurantid=Rmenuitems.restid and  RestaurantCity="coimbatore";
++--------------+---------------------------+--------+------------------+-----------+
+| RestaurantID | RestaurantName            | MenuID | MenuName         | MenuPrice |
++--------------+---------------------------+--------+------------------+-----------+
+|            1 | BBQ                       |      5 | Grilled Paneer   |       150 |
+|            3 | Peking Chinese Restaurant |      7 | ChickenFriedRich |       200 |
++--------------+---------------------------+--------+------------------+-----------+
+
+2 rows in set (0.03 sec)
+-----------------------------------------------------------------------------------------------------------
+4)) Show the list of Orders of a specific customer::
+
+mysql> select * from Orders o where CustomerID=5;
++---------+------------+------------+----------------------------------+-------------+
+| OrderID | CustomerID | Orderdate  | DeliveryAddress                  | OrderStatus |
++---------+------------+------------+----------------------------------+-------------+
+|       5 |          5 | 2020-02-04 | Theodore LoweAp #867-859 Sit Rd. |  delivered  |
++---------+------------+------------+----------------------------------+-------------+
+1 row in set (0.03 sec)
+
+mysql> select * from Orders o where CustomerID=3;
++---------+------------+------------+----------------------------------+-------------+
+| OrderID | CustomerID | Orderdate  | DeliveryAddress                  | OrderStatus |
++---------+------------+------------+----------------------------------+-------------+
+|       3 |          3 | 2020-02-04 | 727 Ullamcorper. StreetRoseville |  pending    |
++---------+------------+------------+----------------------------------+-------------+
+1 row in set (0.00 sec)
+=============================================================================================================
+5))5. Show the list of orders along with ordermenus of a specific customer
+mysql> select o.OrderId , Orderdate,  DeliveryAddress, OrderStatus, MenuID,MenuQty from Orders o, OrderMenus r where o.orderid=r.orderid and customerid=5;
++---------+------------+----------------------------------+-------------+--------+---------+
+| OrderId | Orderdate  | DeliveryAddress                  | OrderStatus | MenuID | MenuQty |
++---------+------------+----------------------------------+-------------+--------+---------+
+|       5 | 2020-02-04 | Theodore LoweAp #867-859 Sit Rd. |  delivered  |      8 |     100 |
++---------+------------+----------------------------------+-------------+--------+---------+
+1 row in set (0.03 sec)
+
+mysql> select o.OrderId , Orderdate,  DeliveryAddress, OrderStatus, MenuID,MenuQty from Orders o, OrderMenus r where o.orderid=r.orderid and customerid=6;
++---------+------------+---------------------------------+-------------+--------+---------+
+| OrderId | Orderdate  | DeliveryAddress                 | OrderStatus | MenuID | MenuQty |
++---------+------------+---------------------------------+-------------+--------+---------+
+|       6 | 2017-02-04 | Theodore koodi #867-859 Sit Rd. | pending     |     10 |     105 |
++---------+------------+---------------------------------+-------------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select o.OrderId , Orderdate,  DeliveryAddress, OrderStatus, MenuID,MenuQty from Orders o, OrderMenus r where o.orderid=r.orderid and customerid=2;
++---------+------------+----------------------------------+-------------+--------+---------+
+| OrderId | Orderdate  | DeliveryAddress                  | OrderStatus | MenuID | MenuQty |
++---------+------------+----------------------------------+-------------+--------+---------+
+|       2 | 2020-02-02 | 8562 Fusce Rd.Frederick Nebraska |  delivered  |      6 |      80 |
++---------+------------+----------------------------------+-------------+--------+---------+
+1 row in set (0.00 sec)
+===================================================================================================================
+6))
+6. Show the list of latest 5 orders of a specific customer:
+
+mysql> select * from orders where customerid=5 order by orderID desc limit 5;
++---------+------------+------------+----------------------------------+-------------+
+| OrderID | CustomerID | Orderdate  | DeliveryAddress                  | OrderStatus |
++---------+------------+------------+----------------------------------+-------------+
+|      10 |          5 | 0199-01-12 | coimbatore north street          |  pending    |
+|       9 |          5 | 2020-01-12 | coimbatore west street           |  deliverd   |
+|       8 |          5 | 2020-02-12 | erode east street                |  deliverd   |
+|       7 |          5 | 2017-04-03 | dindigul                         |  pending    |
+|       5 |          5 | 2020-02-04 | Theodore LoweAp #867-859 Sit Rd. |  delivered  |
++---------+------------+------------+----------------------------------+-------------+
+5 rows in set (0.00 sec)
+============================================================================================================
+7))
+7. Show the list of restaurant which never get any order.::
+
+
+mysql> select * from restaurants r where not exists(select * from RMenuItems where  RestID=r.RestaurantID);
++--------------+-------------------+-------------------+----------------+-----------+
+| RestaurantID | RestaurantName    | RestaurantAddress | RestaurantCity | ContactNo |
++--------------+-------------------+-------------------+----------------+-----------+
+|            7 | thalapkattu Door  | 102, sonah Rd     | dindigul       | 765432198 |
+|            8 | annapurnah Door   | 102, saththi Rd   | dindigul       | 765432198 |
++--------------+-------------------+-------------------+----------------+-----------+
+2 rows in set (0.00 sec)
+======================================================================================================================
+8. Show the list of top ten selling menu item
+
+mysql> SELECT * FROM rmenuitems  LIMIT 10
+    -> ;
++--------+--------+------------------+----------+--------------+-----------+---------+
+| Menuid | Restid | Menuname         | Menutype | Menucategory | Menuprice | Menudes |
++--------+--------+------------------+----------+--------------+-----------+---------+
+|      5 |      1 | Grilled Paneer   | Starter  | Veg          |       150 | Half    |
+|      6 |      2 | VegFriedRich     | Main     | Veg          |       180 | Half    |
+|      7 |      3 | ChickenFriedRich | Main     | Non-veg      |       200 | Full    |
+|      8 |      4 | Chinese Noodles  | Main     | Non-veg      |       250 | Full    |
+|     10 |      5 | Palak Cheat      | Starter  | Veg          |       190 | Full    |
+|     11 |      6 | nonVegFriedRich  | Main     | nonveg       |       200 | Half    |
+|     12 |      2 | FriedRich        | normal   | nonveg       |       500 | Half    |
+|     13 |      1 | Friedchicken     | normal   | nonveg       |       550 | full    |
+|     14 |      3 | Friedpanier      | normal   | veg          |       550 | full    |
+
++--------+--------+------------------+----------+--------------+-----------+---------+	
+
+mysql> SELECT * FROM rmenuitems where menuid LIMIT 10
+    -> ;
++--------+--------+------------------+----------+--------------+-----------+---------+
+| Menuid | Restid | Menuname         | Menutype | Menucategory | Menuprice | Menudes |
++--------+--------+------------------+----------+--------------+-----------+---------+
+|      5 |      1 | Grilled Paneer   | Starter  | Veg          |       150 | Half    |
+|      6 |      2 | VegFriedRich     | Main     | Veg          |       180 | Half    |
+|      7 |      3 | ChickenFriedRich | Main     | Non-veg      |       200 | Full    |
+|      8 |      4 | Chinese Noodles  | Main     | Non-veg      |       250 | Full    |
+|     10 |      5 | Palak Cheat      | Starter  | Veg          |       190 | Full    |
+|     11 |      6 | nonVegFriedRich  | Main     | nonveg       |       200 | Half    |
+|     12 |      2 | FriedRich        | normal   | nonveg       |       500 | Half    |
+|     13 |      1 | Friedchicken     | normal   | nonveg       |       550 | full    |
+|     14 |      3 | Friedpanier      | normal   | veg          |       550 | full    |
++--------+--------+------------------+----------+--------------+-----------+---------+
+9 rows in set (0.00 sec)

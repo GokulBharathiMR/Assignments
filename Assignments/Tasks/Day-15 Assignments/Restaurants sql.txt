@@ -1,0 +1,214 @@
+OnlineFoodOrderingDB:
+
+1.Restaurants table:
+create table Restaurants(RestaurantID int primary key auto_increment,RestaurantName varchar(25),RestaurantAddress varchar(70),RestaurantCity varchar(10),ContactNo bigint);
+
+ desc Restaurants;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| RestaurantID      | int         | NO   | PRI | NULL    | auto_increment |
+| RestaurantName    | varchar(25) | YES  |     | NULL    |                |
+| RestaurantAddress | varchar(70) | YES  |     | NULL    |                |
+| RestaurantCity    | varchar(10) | YES  |     | NULL    |                |
+| ContactNo         | bigint      | YES  |     | NULL    |                |
++-------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.31 sec)
+
+Insert values:
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('BBQ','1000,In Metro Park Inn','Coimbatore',987654321);
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Covai Trans Kitchen','1001,Venkatasamy Rd','Salem',876543219);
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('French Door ','102, Bashyakarlu Rd','Chennai',765432198);
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Annalakshmi Restaurant ','118, Thiyaki Kumaran Rd','Bangalore',6543219870);
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('The Pavilion','1076,The Residency Towers,','Madurai',9786645332);
+insert into  Restaurants(RestaurantName,RestaurantAddress,RestaurantCity,ContactNo)values('Peking Chinese Restaurant','49,A2 Complex,Father Randy St,','Coimbatore',7685949332);
+
+OUTPUT:
+
+mysql> select * from  Restaurants;
++--------------+---------------------------+--------------------------------+----------------+------------+
+| RestaurantID | RestaurantName            | RestaurantAddress              | RestaurantCity | ContactNo  |
++--------------+---------------------------+--------------------------------+----------------+------------+
+|          106 | BBQ                       | 1000,In Metro Park Inn         | Coimbatore     |  987654321 |
+|          107 | Covai Trans Kitchen       | 1001,Venkatasamy Rd            | Salem          |  876543219 |
+|          108 | French Door               | 102, Bashyakarlu Rd            | Chennai        |  765432198 |
+|          109 | Annalakshmi Restaurant    | 118, Thiyaki Kumaran Rd        | Bangalore      | 6543219870 |
+|          110 | The Pavilion              | 1076,The Residency Towers,     | Madurai        | 9786645332 |
+|          111 | Peking Chinese Restaurant | 49,A2 Complex,Father Randy St, | Coimbatore     | 7685949332 |
++--------------+---------------------------+--------------------------------+----------------+------------+
+6 rows in set (0.00 sec)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.RmenuItems table:
+create table RmenuItems(Menuid int primary key auto_increment, Restid int, Menuname varchar(20), Menutype varchar(20), Menucategory varchar(20), Menuprice double,Menudes varchar(20),foreign key(Restid) references Restaurants(RestaurantID));
+
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| Menuid       | int         | NO   | PRI | NULL    | auto_increment |
+| Restid       | int         | YES  | MUL | NULL    |                |
+| Menuname     | varchar(20) | YES  |     | NULL    |                |
+| Menutype     | varchar(20) | YES  |     | NULL    |                |
+| Menucategory | varchar(20) | YES  |     | NULL    |                |
+| Menuprice    | double      | YES  |     | NULL    |                |
+| Menudes      | varchar(20) | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.07 sec)
+Insert values:
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(106,'Grilled Paneer','Starter','Veg',150,'Half');
+
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(107,'Palak Cheat','Starter','Veg',190,'Full');
+
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(108,'Chinese Noodles','Main','Non-veg',250,'Full');
+
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(109,'ChickenFriedRich','Main','Non-veg',200,'Full');
+
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(110,'VegFriedRich','Main','Veg',180,'Half');
+insert into RmenuItems(RestId,Menuname,Menutype,Menucategory,Menuprice ,Menudes)values(111,'VegRich','Main','Veg',110,'Full');
+
+ select * from RmenuItems;
++--------+--------+------------------+----------+--------------+-----------+---------+
+| Menuid | Restid | Menuname         | Menutype | Menucategory | Menuprice | Menudes |
++--------+--------+------------------+----------+--------------+-----------+---------+
+|      1 |    106 | Grilled Paneer   | Starter  | Veg          |       150 | Half    |
+|      2 |    107 | Palak Cheat      | Starter  | Veg          |       190 | Full    |
+|      3 |    108 | Chinese Noodles  | Main     | Non-veg      |       250 | Full    |
+|      4 |    109 | ChickenFriedRich | Main     | Non-veg      |       200 | Full    |
+|      5 |    110 | VegFriedRich     | Main     | Veg          |       180 | Half    |
+|      6 |    111 | VegRich          | Main     | Veg          |       110 | Full    |
++--------+--------+------------------+----------+--------------+-----------+---------+
+6 rows in set (0.04 sec)
+5 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.Customers table:
+create table Customers(CustomerID int primary key,CustomerName varchar(20),CustomerCity varchar(20),CustomerDOB date,CustomerGender varchar(10),CustomerPassword varchar(20));
+ 
+desc Customers;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| CustomerID       | int         | NO   | PRI | NULL    |       |
+| CustomerName     | varchar(20) | YES  |     | NULL    |       |
+| CustomerCity     | varchar(20) | YES  |     | NULL    |       |
+| CustomerDOB      | date        | YES  |     | NULL    |       |
+| CustomerGender   | varchar(10) | YES  |     | NULL    |       |
+| CustomerPassword | varchar(20) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.74 sec)
+Insert values:
+insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(1,'Ramesh','Salem','1987-01-14','Male','Ramesh@1987');
+insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(2,'Venkat','Chennai','1984-10-02','Male','Venkat@1984');
+insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(3,'Brindha','Bangalore','1990-02-10','Female','Brindha@1990');
+insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(4,'Arun','Dubai','1994-10-21','Male','Arun@1994');
+insert into Customers(CustomerID,CustomerName,CustomerCity,CustomerDOB,CustomerGender,CustomerPassword)values(5,'Anand','Singapore','1991-06-29','Male','Anand@1991');
+
+ select * from Customers;
++------------+--------------+--------------+-------------+----------------+------------------+
+| CustomerID | CustomerName | CustomerCity | CustomerDOB | CustomerGender | CustomerPassword |
++------------+--------------+--------------+-------------+----------------+------------------+
+|          1 | Ramesh       | Salem        | 1987-01-14  | Male           | Ramesh@1987      |
+|          2 | Venkat       | Chennai      | 1984-10-02  | Male           | Venkat@1984      |
+|          3 | Brindha      | Bangalore    | 1990-02-10  | Female         | Brindha@1990     |
+|          4 | Arun         | Dubai        | 1994-10-21  | Male           | Arun@1994        |
+|          5 | Anand        | Singapore    | 1991-06-29  | Male           | Anand@1991       |
++------------+--------------+--------------+-------------+----------------+------------------+
+5 rows in set (0.00 sec)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Orders table:
+create table Orders(OrderID int primary key auto_increment,CustomerID int,Orderdate date,DeliveryAddress varchar(40),OrderStatus varchar(20), foreign key(CustomerID)references Customers(CustomerID));
+
+ desc Orders;
++-----------------+-------------+------+-----+---------+----------------+
+| Field           | Type        | Null | Key | Default | Extra          |
++-----------------+-------------+------+-----+---------+----------------+
+| OrderID         | int         | NO   | PRI | NULL    | auto_increment |
+| CustomerID      | int         | YES  | MUL | NULL    |                |
+| Orderdate       | date        | YES  |     | NULL    |                |
+| DeliveryAddress | varchar(40) | YES  |     | NULL    |                |
+| OrderStatus     | varchar(20) | YES  |     | NULL    |                |
++-----------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.03 sec)
+Insert values:
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(1,'2020-02-03','711-2880 Nulla St.Mankato Mississippi','Pending');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(2,'2020-02-02','8562 Fusce Rd.Frederick Nebraska',' delivered');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(2,'2020-02-03','8562 Fusce Rd.Frederick Nebraska',' delivered');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(3,'2020-02-04','727 Ullamcorper. StreetRoseville',' pending');
+insert into Orders(CustomerID,Orderdate,DeliveryAddress,OrderStatus)values(4,'2020-02-04','Theodore LoweAp #867-859 Sit Rd.',' delivered');
+
+select * from Orders;
++---------+------------+------------+---------------------------------------+-------------+
+| OrderID | CustomerID | Orderdate  | DeliveryAddress                       | OrderStatus |
++---------+------------+------------+---------------------------------------+-------------+
+|     204 |          1 | 2020-02-03 | 711-2880 Nulla St.Mankato Mississippi | Pending     |
+|     205 |          2 | 2020-02-02 | 8562 Fusce Rd.Frederick Nebraska      |  delivered  |
+|     206 |          3 | 2020-02-04 | 727 Ullamcorper. StreetRoseville      |  pending    |
+|     207 |          4 | 2020-02-04 | Theodore LoweAp #867-859 Sit Rd.      |  delivered  |
+|     208 |          2 | 2020-02-03 | 8562 Fusce Rd.Frederick Nebraska      |  delivered  |
++---------+------------+------------+---------------------------------------+-------------+
+5 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5.Ordermenus table:
+create table Ordermenus(OrderID int,Menuid int,Menuqty int, Menuprice double,foreign key(Orderid) references Orders (OrderID),foreign key(Menuid) references RmenuItems(Menuid));
+desc Ordermenus;
++-----------+--------+------+-----+---------+-------+
+| Field     | Type   | Null | Key | Default | Extra |
++-----------+--------+------+-----+---------+-------+
+| OrderID   | int    | YES  | MUL | NULL    |       |
+| Menuid    | int    | YES  | MUL | NULL    |       |
+| Menuqty   | int    | YES  |     | NULL    |       |
+| Menuprice | double | YES  |     | NULL    |       |
++-----------+--------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+Insert values:
+insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(204,1,90,150);
+insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(205,2,80,190);
+insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(206,3,100,250);
+insert into Ordermenus(OrderID,Menuid,Menuqty,Menuprice)values(207,4,90,200);
+
+select * from Ordermenus;
++---------+--------+---------+-----------+
+| OrderID | Menuid | Menuqty | Menuprice |
++---------+--------+---------+-----------+
+|     204 |      1 |      90 |       150 |
+|     205 |      2 |      80 |       190 |
+|     206 |      3 |     100 |       250 |
+|     207 |      4 |      90 |       200 |
++---------+--------+---------+-----------+
+4 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Questions:
+
+-> Show the list of Restaurant of specific city:
+
+ select  count( distinct RestaurantCity)from Restaurants ;
++---------------------------------+
+| count( distinct RestaurantCity) |
++---------------------------------+
+|                               5 |
++---------------------------------+
+1 row in set (0.07 sec)
+
+
+->Show the list of Restaurant along with menus (RestaurantID,RestaurantName,MenuID,MenuName,MenuPrice):
+select * from Restaurants r,RmenuItems m where r.RestaurantID=m.restid;
++--------------+-------------------------+----------------------------+----------------+------------+--------+--------+------------------+----------+--------------+-----------+---------+
+| RestaurantID | RestaurantName          | RestaurantAddress          | RestaurantCity | ContactNo  | Menuid | Restid | Menuname         | Menutype | Menucategory | Menuprice | Menudes |
++--------------+-------------------------+----------------------------+----------------+------------+--------+--------+------------------+----------+--------------+-----------+---------+
+|          106 | BBQ                     | 1000,In Metro Park Inn     | Coimbatore     |  987654321 |      1 |    106 | Grilled Paneer   | Starter  | Veg          |       150 | Half    |
+|          107 | Covai Trans Kitchen     | 1001,Venkatasamy Rd        | Salem          |  876543219 |      2 |    107 | Palak Cheat      | Starter  | Veg          |       190 | Full    |
+|          108 | French Door             | 102, Bashyakarlu Rd        | Chennai        |  765432198 |      3 |    108 | Chinese Noodles  | Main     | Non-veg      |       250 | Full    |
+|          109 | Annalakshmi Restaurant  | 118, Thiyaki Kumaran Rd    | Bangalore      | 6543219870 |      4 |    109 | ChickenFriedRich | Main     | Non-veg      |       200 | Full    |
+|          110 | The Pavilion            | 1076,The Residency Towers, | Madurai        | 9786645332 |      5 |    110 | VegFriedRich     | Main     | Veg          |       180 | Half    |
++--------------+-------------------------+----------------------------+----------------+------------+--------+--------+------------------+----------+--------------+-----------+---------+
+5 rows in set (0.00 sec)
+
+->Show the list of Restaurant along with menus (RestaurantID,RestaurantName,MenuID,MenuName,MenuPrice)of specific city:
+select r.RestaurantID,r.RestaurantName,m.MenuID,m.MenuName,m.Menuprice from Restaurants r ,RmenuItems m where r.RestaurantID=m.restid and r.RestaurantCity='Coimbatore';
++--------------+---------------------------+--------+----------------+-----------+
+| RestaurantID | RestaurantName            | MenuID | MenuName       | Menuprice |
++--------------+---------------------------+--------+----------------+-----------+
+|          106 | BBQ                       |      1 | Grilled Paneer |       150 |
+|          111 | Peking Chinese Restaurant |      6 | VegRich        |       110 |
++--------------+---------------------------+--------+----------------+-----------+
+2 rows in set (0.00 sec)
